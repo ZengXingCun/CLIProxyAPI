@@ -14,8 +14,12 @@ jobs:
         with:
           go-version: '1.24'
 
-      - name: Build for Mipsle
+      - name: Build for Mipsle (Memory Optimized)
         run: |
+          # CGO_ENABLED=0: 强制静态编译，大幅降低musl环境下的内存开销
+          # -trimpath: 移除编译路径
+          # -ldflags="-s -w": 去除符号表和调试信息，减小体积
+          # -gcflags="-l": 禁用内联，减少逃逸到堆上的内存分配
           CGO_ENABLED=0 GOOS=linux GOARCH=mipsle GOMIPS=softfloat go build -trimpath -ldflags="-s -w" -gcflags="-l" -o cli-proxy-api ./cmd/server
 
       - name: Upload binary
