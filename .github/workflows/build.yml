@@ -16,7 +16,7 @@ jobs:
 
       - name: Build for Mipsle
         run: |
-          CGO_ENABLED=0 GOOS=linux GOARCH=mipsle GOMIPS=softfloat go build -ldflags="-s -w -trimpath" -gcflags="-l" -o cli-proxy-api ./cmd/server
+          CGO_ENABLED=0 GOOS=linux GOARCH=mipsle GOMIPS=softfloat go build -trimpath -ldflags="-s -w" -gcflags="-l" -o cli-proxy-api ./cmd/server
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
